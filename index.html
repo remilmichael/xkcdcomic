@@ -8,25 +8,27 @@
     <title>Comics</title>
 </head>
 <body>
-    <div class="comic-main">
-        <div class="comic-main-buttons">
-            <div class="comic-main-button-nav">
-                <button class="btn-prev" id="btnPrev">Prev</button>
+    <main>
+        <div class="comic-main">
+            <div class="comic-main-buttons">
+                <div class="comic-main-button-nav">
+                    <button class="btn-prev" id="btnPrev">Prev</button>
+                </div>
+                <div class="comic-main-button-nav">
+                    <button class="btn-next" id="btnNext">Next</button>
+                </div>
+                <div class="comic-main-button-nav">
+                    <button class="btn-rand" id="btnRandom">Random</button>
+                </div>
             </div>
-            <div class="comic-main-button-nav">
-                <button class="btn-next" id="btnNext">Next</button>
+            <div class="comic-main-count">
+                <p id="viewCount"></p>
             </div>
-            <div class="comic-main-button-nav">
-                <button class="btn-rand" id="btnRandom">Random</button>
+            <div class="comic-main-image">
+                <img alt="loading" id="comicImg" style="display: none;">
             </div>
         </div>
-        <div class="comic-main-count">
-            <p id="viewCount"></p>
-        </div>
-        <div class="comic-main-image">
-            <img alt="loading" id="comicImg" style="display: none;">
-        </div>
-    </div>
+    </main>
     <script src="index.js"></script>
 </body>
 </html>

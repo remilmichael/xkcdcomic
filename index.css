@@ -1,3 +1,18 @@
+html, body {
+    height: 100vh;
+}
+
+main {
+    margin-top: 0px;
+    border: 3px solid rgb(157, 152, 233);
+    margin: auto;
+    width: 90%;
+    min-height: 100vh;
+    padding-bottom: 25px;
+    border-radius: 2px;
+    box-shadow: 1px 2px 10px 1px rgb(192, 188, 236);
+}
+
 .comic-main {
     margin: auto;
     display: flex;
@@ -8,7 +23,38 @@
     margin: auto;
     margin-top: 10px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+}
+
+.comic-main-button-nav button {
+    margin-top: 1.5rem;
+    margin-left: 1rem;
+    padding: 1rem;
+    width: 155px;
+    border: 2px solid #161e65;
+    border-radius: 1rem;
+    background-color: #2c2d43;
+    color: white;
+}
+
+.comic-main-button-nav button:hover,
+.comic-main-button-nav button:active {
+    border: 2px solid #2f4392;
+    background-color: #9199cb;
+    transition: background-color 400ms;
+    cursor: pointer;
+}
+
+.comic-main-button-nav button:active {
+    transform: translateY(3px);
+}
+
+.comic-main-button-nav button:focus {
+    outline: unset;
+}
+
+.comic-main-count {
+    margin: auto;
 }
 
 .comic-main-image {
