@@ -1,0 +1,1 @@
+Displays random comics from xkcd.com
