@@ -17,10 +17,12 @@ const fetchLatestComic = async () => {
 }
 
 
-const fetchAndLoadComics = () => {
+const fetchAndLoadLatestComic = () => {
     fetchLatestComic()
         .then(response => {
             localStorage.setItem('maxComic', response.num)
+            currentComicNumber = response.num
+            updateAndWriteCount()
             document.getElementById("comicImg").src = response.img
             document.getElementById("comicImg").style.display = 'block'
         })
@@ -46,8 +48,8 @@ const goBack = () => {
 
 const goNext = () => {
     const maxComic = localStorage.getItem('maxComic')
-
-    if (!maxComic || !currentComicNumber || currentComicNumber === maxComic) {
+    
+    if (!maxComic || !currentComicNumber || parseInt(currentComicNumber) >= parseInt(maxComic)) {
         return
     }
     window.location.href = `?comic=${parseInt(currentComicNumber) + 1}`
@@ -60,6 +62,29 @@ const getRandom = () => {
     }
     const randomComic = Math.trunc(Math.random() * maxComic + 1)
     window.location.href = `?comic=${randomComic}`
+}
+
+const updateAndWriteCount = () => {
+    let countMap
+    let count
+    const countStorage = localStorage.getItem('count')
+    
+    if (countStorage) {
+        countMap = new Map(JSON.parse(countStorage))
+        count = countMap.get(currentComicNumber)
+    } else {
+        countMap = new Map()
+    }
+
+    if (!count) {
+        count = 1
+    }
+    
+    const countTag = document.getElementById('viewCount')
+    const countText = document.createTextNode(`Comic view count: ${count}`)
+    countTag.append(countText)
+    countMap.set(currentComicNumber, count + 1)
+    localStorage.setItem('count', JSON.stringify(Array.from(countMap.entries())))
 }
 
 const urlSearchParams = new URLSearchParams(window.location.search)
@@ -79,10 +104,11 @@ if (currentComicNumber) {
         .then(response => {
             document.getElementById("comicImg").src = response.img
             document.getElementById("comicImg").style.display = 'block'
+            updateAndWriteCount()
         })
         .catch(err => {
             console.log(err)
         })
 } else {
-    fetchAndLoadComics()
+    fetchAndLoadLatestComic()
 }
