@@ -1,0 +1,17 @@
+.comic-main {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.comic-main-buttons {
+    margin: auto;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.comic-main-image {
+    margin: auto;
+    margin-top: 20px;
+}
