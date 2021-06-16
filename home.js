@@ -1,15 +1,35 @@
+/**
+ * @author Remil Michael
+ * 
+ */
+
+// variable name to store the current comic number
 let currentComicNumber
 
+/**
+ * async function to fetch a particular comic using the
+ * comicNumber parameter.
+ * 
+ * @function fetchComics
+ * @param {string} comicNumber 
+ * @returns Promise
+ */
 const fetchComics = async (comicNumber) => {
-
     const response = await fetch(`https://xkcd-api-ridvanaltun.vercel.app/api/comics/${comicNumber}`)
     if (response.ok) {
         return response.json()
     }
 }
 
-const fetchLatestComic = async () => {
 
+/**
+ * async function to fetch the latest comic as returns
+ * the response as a promise object
+ * 
+ * @function fetchLatestComic
+ * @returns Promise
+ */
+const fetchLatestComic = async () => {
     const response = await fetch(`https://xkcd-api-ridvanaltun.vercel.app/api/comics/latest`)
     if (response.ok) {
         return response.json()
@@ -17,6 +37,12 @@ const fetchLatestComic = async () => {
 }
 
 
+/**
+ * function to process the fetched latest comic and update
+ * DOM.
+ * 
+ * @function fetchAndLoadLatestComic
+ */
 const fetchAndLoadLatestComic = () => {
     fetchLatestComic()
         .then(response => {
@@ -30,6 +56,13 @@ const fetchAndLoadLatestComic = () => {
         })
 }
 
+
+/**
+ * function to navigate to the previous comic
+ * 
+ * @function goBack
+ * @returns undefined
+ */
 const goBack = () => {
     if (!currentComicNumber) {
         const maxComic = localStorage.getItem('maxComic')
@@ -45,6 +78,13 @@ const goBack = () => {
     }
 }
 
+
+/**
+ * function to navigate to the next comic
+ * 
+ * @function goNext
+ * @returns undefined
+ */
 const goNext = () => {
     const maxComic = localStorage.getItem('maxComic')
     
@@ -54,6 +94,13 @@ const goNext = () => {
     window.location.href = `?comic=${parseInt(currentComicNumber) + 1}`
 }
 
+
+/**
+ * function to get a random comic
+ * 
+ * @function getRandom
+ * @returns undefined
+ */
 const getRandom = () => {
     const maxComic = localStorage.getItem('maxComic')
     if (!maxComic) {
@@ -63,6 +110,11 @@ const getRandom = () => {
     window.location.href = `?comic=${randomComic}`
 }
 
+/**
+ * function to update localStorage when a comic is viewed
+ * 
+ * @function updateAndWriteCount
+ */
 const updateAndWriteCount = () => {
     let countMap
     let count
@@ -86,6 +138,14 @@ const updateAndWriteCount = () => {
     localStorage.setItem('count', JSON.stringify(Array.from(countMap.entries())))
 }
 
+/**
+ * function to convert month number to month name
+ * 
+ * @function getMonthName
+ * @param {string} monthNumber 
+ * @returns string
+ */
+
 const getMonthName = (monthNumber) => {
     if (monthNumber === '1') return 'January'
     if (monthNumber === '2') return 'February'
@@ -101,8 +161,14 @@ const getMonthName = (monthNumber) => {
     if (monthNumber === '12') return 'December'
 }
 
+/**
+ * function to update the DOM based on the response
+ * received.
+ * 
+ * @function updateDOMElements
+ * @param {Object} response 
+ */
 const updateDOMElements = (response) => {
-
     const monthName = getMonthName(response.month)
     document.getElementById('comicImg').src = response.img
     document.getElementById('comicImg').alt = response.alt
@@ -110,6 +176,9 @@ const updateDOMElements = (response) => {
     document.getElementById('comicTitle').append(document.createTextNode(response.title))
     document.getElementById('comicDate').append(document.createTextNode(`${monthName} ${response.day}, ${response.year}`))
 }
+
+
+
 
 const urlSearchParams = new URLSearchParams(window.location.search)
 currentComicNumber = urlSearchParams.get('comic')
