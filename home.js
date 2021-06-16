@@ -23,8 +23,7 @@ const fetchAndLoadLatestComic = () => {
             localStorage.setItem('maxComic', response.num)
             currentComicNumber = response.num
             updateAndWriteCount()
-            document.getElementById("comicImg").src = response.img
-            document.getElementById("comicImg").style.display = 'block'
+            updateDOMElements(response)
         })
         .catch(err => {
             console.log(err)
@@ -102,6 +101,16 @@ const getMonthName = (monthNumber) => {
     if (monthNumber === '12') return 'December'
 }
 
+const updateDOMElements = (response) => {
+
+    const monthName = getMonthName(response.month)
+    document.getElementById('comicImg').src = response.img
+    document.getElementById('comicImg').alt = response.alt
+    document.getElementById('comicImg').style.display = 'block'
+    document.getElementById('comicTitle').append(document.createTextNode(response.title))
+    document.getElementById('comicDate').append(document.createTextNode(`${monthName} ${response.day}, ${response.year}`))
+}
+
 const urlSearchParams = new URLSearchParams(window.location.search)
 currentComicNumber = urlSearchParams.get('comic')
 
@@ -117,14 +126,7 @@ btnRandom.addEventListener('click', getRandom)
 if (currentComicNumber) {
     fetchComics(currentComicNumber)
         .then(response => {
-            const monthName = getMonthName(response.month)
-
-            document.getElementById('comicImg').src = response.img
-            document.getElementById('comicImg').alt = response.alt
-            document.getElementById('comicImg').style.display = 'block'
-            document.getElementById('comicTitle').append(document.createTextNode(response.title))
-            document.getElementById('comicDate').append(document.createTextNode(`${monthName} ${response.day}, ${response.year}`))
-
+            updateDOMElements(response)
             updateAndWriteCount()
         })
         .catch(err => {
